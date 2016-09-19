@@ -8,9 +8,10 @@ services:
   - docker
 
 before_install:
+- export REPO_NAME=$( echo $TRAVIS_REPO_SLUG | cut -d'/' -f2 )
 - if [[ ! -d ~/data/ds114_test1 ]]; then wget -c -P ${HOME}/downloads/ "https://googledrive.com/host/0B2JWN60ZLkgkMEw4bW5VUUpSdFU/ds114_test1.tar" && mkdir -p ${HOME}/data && tar xf ${HOME}/downloads/ds114_test1.tar -C ${HOME}/data; fi
-- docker build -t bids/spm .
+- docker build -t bids/${REPO_NAME,,} .
 - mkdir -p ${HOME}/outputs
 
 script:
-- docker run -ti --rm --read-only -v /tmp:/tmp -v /var/tmp:/var/tmp -v ${HOME}/data/ds114_test1:/bids_dataset -v ${HOME}/outputs:/outputs bids/spm /bids_dataset /outputs participant --participant_label 01
+- docker run -ti --rm --read-only -v /tmp:/tmp -v /var/tmp:/var/tmp -v ${HOME}/data/ds114_test1:/bids_dataset -v ${HOME}/outputs:/outputs bids/${REPO_NAME,,} /bids_dataset /outputs participant --participant_label 01
