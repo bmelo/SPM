@@ -1,12 +1,10 @@
-FROM bids/base_validator
+FROM ubuntu:latest
 
-MAINTAINER Guillaume Flandin <g.flandin@ucl.ac.uk>
+MAINTAINER Bruno Melo <bruno.melo@idor.org>
 
-# Update system
-RUN apt-get -qq update && apt-get -qq install -y \
-    unzip \
-    xorg \
-    wget && \
+## Install base
+RUN apt-get -qq update && \
+    apt-get -qq install -y unzip xorg wget && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install MATLAB MCR
